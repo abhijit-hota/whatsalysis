@@ -1,0 +1,41 @@
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+		"Droid Sans", "Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	display: flex;
+	justify-content: center;
+}
+
+.app {
+	width: 80vw;
+	padding: 1em;
+}
+
+.input {
+	padding: 1em;
+	margin-bottom: 1em;
+}
+.charts {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+#sender-chart {
+	width: 31%;
+}
+#time-chart {
+	width: 60%;
+}
+#words {
+	width: 20%;
+}
+.count {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+} 
+.count:hover {
+  background: #efefef;
+}
