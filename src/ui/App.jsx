@@ -22,15 +22,16 @@ function App() {
 			console.time("process");
 
 			const { allMessages, allEvents } = parseText(result);
-			const count = getCountData(allMessages);
+			setAllEvents(allEvents);
 
+			const count = getCountData(allMessages);
 			setSenderWiseCount(count.senderWise);
 			setTimeWiseCount(count.timeWise);
 
 			const allWords = getAllValidWords(allMessages);
 			const sortedWordCount = getSortedWordCount(allWords);
-
 			setWordsCount(sortedWordCount);
+
 			console.timeEnd("process");
 			setLoaded(true);
 		});
@@ -60,6 +61,17 @@ function App() {
 								<span>{count}</span>
 							</div>
 						))}
+					</div>
+					<div id="group-names">
+						<h3>Group Names</h3>
+						{allEvents
+							.filter(({ type }) => type === "subjectChange")
+							.map(({ changer, from, to }) => (
+								<div className="count" key={changer + from + to}>
+									<strong>{changer}</strong>
+									<span>{to}</span>
+								</div>
+							))}
 					</div>
 				</div>
 			)}

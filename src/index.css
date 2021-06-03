@@ -30,6 +30,9 @@ body {
 #words {
 	width: 20%;
 }
+#group-names {
+	width: 40%;
+}
 .count {
 	display: flex;
 	justify-content: space-between;
