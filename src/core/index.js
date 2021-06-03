@@ -1,7 +1,7 @@
 import { META_REGEX } from "./constants.js";
 import { getEvent, getTimeKey, isValidMessage, isValidWord } from "./helpers.js";
 
-export function parseMessagesFromText(text) {
+export function parseText(text) {
 	const arr = text.split(META_REGEX);
 
 	const allMessages = [];

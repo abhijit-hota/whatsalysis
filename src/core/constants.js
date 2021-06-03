@@ -55,5 +55,6 @@ export const ignoredWords = [
 	"much",
 	"didn", //didn't
 	"here",
-	"https"
+	"https",
+	"should"
 ];

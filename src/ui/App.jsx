@@ -1,6 +1,6 @@
 import { defaults } from "chart.js";
 import React, { useState } from "react";
-import { parseMessagesFromText, getCountData, getAllValidWords, getSortedWordCount } from "../core";
+import { parseText, getCountData, getAllValidWords, getSortedWordCount } from "../core";
 import SenderWisePieChart from "./SenderWisePieChart";
 import TimeWiseBarChart from "./TimeWiseBarChart";
 
@@ -9,6 +9,7 @@ defaults.font.family = `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
 
 function App() {
 	const [loaded, setLoaded] = useState(false);
+	const [allEvents, setAllEvents] = useState([]);
 	const [senderWiseCount, setSenderWiseCount] = useState({});
 	const [timeWiseCount, setTimeWiseCount] = useState({});
 	const [wordsCount, setWordsCount] = useState([]);
@@ -20,7 +21,7 @@ function App() {
 		reader.addEventListener("loadend", ({ target: { readyState, result } }) => {
 			console.time("process");
 
-			const { allMessages, allEvents } = parseMessagesFromText(result);
+			const { allMessages, allEvents } = parseText(result);
 			const count = getCountData(allMessages);
 
 			setSenderWiseCount(count.senderWise);
