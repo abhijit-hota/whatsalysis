@@ -1,7 +1,11 @@
+import { defaults } from "chart.js";
 import React, { useState } from "react";
 import { parseMessagesFromText, getCountData, getAllValidWords, getSortedWordCount } from "../core";
 import SenderWisePieChart from "./SenderWisePieChart";
 import TimeWiseBarChart from "./TimeWiseBarChart";
+
+defaults.font.family = `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+"Droid Sans", "Helvetica Neue", sans-serif`;
 
 function App() {
 	const [loaded, setLoaded] = useState(false);
@@ -16,13 +20,13 @@ function App() {
 		reader.addEventListener("loadend", ({ target: { readyState, result } }) => {
 			console.time("process");
 
-			const parsedMessages = parseMessagesFromText(result);
-			const count = getCountData(parsedMessages);
+			const { allMessages, allEvents } = parseMessagesFromText(result);
+			const count = getCountData(allMessages);
 
 			setSenderWiseCount(count.senderWise);
 			setTimeWiseCount(count.timeWise);
 
-			const allWords = getAllValidWords(parsedMessages);
+			const allWords = getAllValidWords(allMessages);
 			const sortedWordCount = getSortedWordCount(allWords);
 
 			setWordsCount(sortedWordCount);
@@ -50,7 +54,7 @@ function App() {
 					<div id="words">
 						<h3>Most Used Words</h3>
 						{wordsCount.slice(0, 20).map(([word, count]) => (
-							<div className="count">
+							<div className="count" key={word}>
 								<strong>{word}</strong>
 								<span>{count}</span>
 							</div>

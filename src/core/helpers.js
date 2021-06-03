@@ -1,4 +1,21 @@
-import { ignoredWords } from "./constants";
+import { ignoredWords, whatsappChatEvents } from "./constants";
+
+export const getEvent = (str) => {
+	for (const eventType in whatsappChatEvents) {
+		const regex = whatsappChatEvents[eventType];
+		const matches = str.match(regex);
+		if (matches) {
+			return { type: eventType, values: matches.groups };
+		}
+	}
+	if (
+		str.trim() ===
+		"Messages and calls are end-to-end encrypted. No one outside of this chat, not even WhatsApp, can read or listen to them. Tap to learn more."
+	) {
+		return { type: "meta", values: { announcement: str.trim() } };
+	}
+	throw new Error("Invalid event");
+};
 
 export const getTimeKey = (timeStr) => {
 	const hour = parseInt(timeStr.split(":")[0]);

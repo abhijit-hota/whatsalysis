@@ -1,18 +1,29 @@
 import { META_REGEX } from "./constants.js";
-import { getTimeKey, isValidMessage, isValidWord } from "./helpers.js";
+import { getEvent, getTimeKey, isValidMessage, isValidWord } from "./helpers.js";
 
-export function parseMessagesFromText(result) {
-	return result.split(META_REGEX).reduce((res, val, i, _arr) => {
-		if (val.trim() !== "" && (i - 1) % 4 === 0) {
-			res.push({
-				date: _arr[i],
-				time: _arr[i + 1],
-				sender: _arr[i + 2],
-				message: _arr[i + 3].trim(),
+export function parseMessagesFromText(text) {
+	const arr = text.split(META_REGEX);
+
+	const allMessages = [];
+	const allEvents = [];
+
+	for (let i = 1; i < arr.length; i += 3) {
+		const event = getEvent(arr[i + 2]);
+		if (event.type === "message") {
+			allMessages.push({
+				date: arr[i],
+				time: arr[i + 1],
+				...event.values,
+			});
+		} else {
+			allEvents.push({
+				type: event.type,
+				...event.values,
 			});
 		}
-		return res;
-	}, []);
+	}
+
+	return { allMessages, allEvents };
 }
 
 export function getCountData(parsedMessages) {
@@ -28,7 +39,8 @@ export function getCountData(parsedMessages) {
 }
 
 export function getAllValidWords(parsedMessages) {
-	return parsedMessages.flatMap(({ message }) => {
+	return parsedMessages.flatMap(({ message: _message }) => {
+		const message = _message.trim()
 		if (isValidMessage(message)) {
 			const words = message.split(/[^a-zA-Z]/).flatMap((_word) => {
 				const word = _word.toLowerCase();
