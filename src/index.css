@@ -4,34 +4,15 @@ body {
 		"Droid Sans", "Helvetica Neue", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	background-color: whitesmoke;
 	display: flex;
 	justify-content: center;
 }
-
-.app {
-	width: 80vw;
-	padding: 1em;
+h1 {
+	margin-top: 0;
 }
-
-.input {
-	margin-bottom: 1em;
-}
-.charts {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-}
-#sender-chart {
-	width: 31%;
-}
-#time-chart {
-	width: 60%;
-}
-#words {
-	width: 20%;
-}
-#group-names {
-	width: 40%;
+input {
+	margin-left: 1em;
 }
 .count {
 	display: flex;
@@ -40,4 +21,24 @@ body {
 }
 .count:hover {
 	background: #efefef;
+}
+#footer {
+	position: absolute;
+	bottom: 0;
+	padding: 1.5em 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color: #333333;
+	width: 100%;
+	background: #efefef;
+}
+#footer a {
+	color: #075e54;
+}
+@media (min-width: 768px) {
+	#footer {
+		justify-content: space-around;
+		flex-direction: row;
+	}
 }

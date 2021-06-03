@@ -1,23 +1,27 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
-import { getColorFromString } from "./utils";
+import { Bar } from "react-chartjs-2";
+import { getColorFromString, humanizeTime } from "./utils";
 
 const TimeWiseBarChart = ({ timeStats }) => {
 	const labels = Object.keys(timeStats);
 	const data = Object.values(timeStats);
 
 	return (
-		<Line
+		<Bar
+			options={{
+				indexAxis: "y",
+				aspectRatio: 0.85,
+			}}
 			data={{
-				labels,
+				labels: labels.map(humanizeTime),
 				datasets: [
 					{
 						minBarLength: 10,
-						label: "Time Wise Statistics",
+						label: "Messages sent",
 						data,
-						backgroundColor: labels.map(getColorFromString),
+						backgroundColor: ["#25D366"],
 						hoverOffset: 4,
-						tension: 0.1
+						tension: 0.1,
 					},
 				],
 			}}

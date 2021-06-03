@@ -1,6 +1,7 @@
 import { defaults } from "chart.js";
 import React, { useState } from "react";
 import { parseText, getCountData, getAllValidWords, getSortedWordCount } from "../core";
+import { Box, VizContainer, AppContainer, Heading } from "./commonents/Box";
 import SenderWisePieChart from "./SenderWisePieChart";
 import TimeWiseBarChart from "./TimeWiseBarChart";
 
@@ -39,43 +40,46 @@ function App() {
 		reader.readAsText(textFile);
 	};
 	return (
-		<div className="app">
-			<h1>WhatsApp Text Analyzer</h1>
-			<div className="input">
+		<AppContainer>
+			<Box style={{ textAlign: "center" }}>
+				<Heading style={{ fontSize: "3em" }}>WhatsApp Text Analyzer</Heading>
 				<label htmlFor="text-data">Select your WhatsApp Export</label>
 				<input type="file" name="text-data" id="text-data" accept="text/plain" onChange={handleCount} />
-			</div>
-			{loaded && (
-				<div className="charts">
-					<div id="sender-chart">
-						<SenderWisePieChart senderStats={senderWiseCount} />
-					</div>
-					<div id="time-chart">
-						<TimeWiseBarChart timeStats={timeWiseCount} />
-					</div>
-					<div id="words">
-						<h3>Most Used Words</h3>
-						{wordsCount.slice(0, 20).map(([word, count]) => (
-							<div className="count" key={word}>
-								<strong>{word}</strong>
-								<span>{count}</span>
-							</div>
-						))}
-					</div>
-					<div id="group-names">
-						<h3>Group Names</h3>
-						{allEvents
-							.filter(({ type }) => type === "subjectChange")
-							.map(({ changer, from, to }) => (
-								<div className="count" key={changer + from + to}>
-									<strong>{changer}</strong>
-									<span>{to}</span>
+			</Box>
+			<VizContainer>
+				{loaded && (
+					<>
+						<Box>
+							<SenderWisePieChart senderStats={senderWiseCount} />
+						</Box>
+						<Box>
+							<TimeWiseBarChart timeStats={timeWiseCount} />
+						</Box>
+						<Box>
+							<Heading>Most Used Words</Heading>
+							{wordsCount.slice(0, 20).map(([word, count]) => (
+								<div className="count" key={word}>
+									<strong>{word}</strong>
+									<span>{count}</span>
 								</div>
 							))}
-					</div>
-				</div>
-			)}
-		</div>
+						</Box>
+						<Box>
+							<Heading>Group Names</Heading>
+							{allEvents
+								.filter(({ type }) => type === "subjectChange")
+								.slice(-20)
+								.map(({ changer, from, to }) => (
+									<div className="count" key={changer + from + to}>
+										<strong>{changer}</strong>
+										<span>{to}</span>
+									</div>
+								))}
+						</Box>
+					</>
+				)}
+			</VizContainer>
+		</AppContainer>
 	);
 }
 

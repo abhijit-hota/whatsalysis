@@ -12,3 +12,8 @@ export const getColorFromString = (str) => {
 	}
 	return colour;
 };
+
+export const humanizeTime = (val) => {
+	const nextNum = ((parseInt(val) + 1) % 24).toString();
+	return `${val.padStart(2, 0)}:00 to ${nextNum.padStart(2, 0)}:00`;
+};
