@@ -34,7 +34,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
-} 
+}
 .count:hover {
-  background: #efefef;
+	background: #efefef;
 }

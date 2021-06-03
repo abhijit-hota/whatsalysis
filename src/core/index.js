@@ -40,7 +40,7 @@ export function getCountData(parsedMessages) {
 
 export function getAllValidWords(parsedMessages) {
 	return parsedMessages.flatMap(({ message: _message }) => {
-		const message = _message.trim()
+		const message = _message.trim();
 		if (isValidMessage(message)) {
 			const words = message.split(/[^a-zA-Z]/).flatMap((_word) => {
 				const word = _word.toLowerCase();
