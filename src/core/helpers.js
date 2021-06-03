@@ -14,6 +14,7 @@ export const getEvent = (str) => {
 	) {
 		return { type: "meta", values: { announcement: str.trim() } };
 	}
+	console.log(str);
 	throw new Error("Invalid event");
 };
 

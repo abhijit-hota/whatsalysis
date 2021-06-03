@@ -7,6 +7,7 @@ export const whatsappChatEvents = {
 	iconChange: /(?<changer>.+) changed this group's icon/,
 	settingsChange:
 		/(?<changer>.+) changed this group's settings to allow (?<to>only admins|all participants) to (?<setting>send messages to this group|edit this group's info)/,
+	adminChange: /(?<admin>You're now an admin)/,
 	personAdded: /(?<adder>.+) added (?<added>.+)/,
 	personJoined: /(?<joined>.+) joined using (?:your invite|this group's invite link)/,
 	personRemoved: /(?<remover>.+) removed (?<removed>.+)/,
