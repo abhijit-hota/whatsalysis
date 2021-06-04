@@ -6,6 +6,11 @@ export const Heading = styled.h2`
 	color: ${({ as }) => (as === "h1" ? "#075e54" : "#128C7E")};
 `;
 
+export const SecondaryText = styled.span`
+	color: #666666;
+	text-align: center;
+`;
+
 export const Box = styled.div`
 	background-color: #fdfdfd;
 	border-radius: 0.5em;

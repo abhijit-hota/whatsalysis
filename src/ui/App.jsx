@@ -1,54 +1,99 @@
 import { defaults } from "chart.js";
 import React, { useState } from "react";
 import { parseText, getCountData, getAllValidWords, getSortedWordCount } from "../core";
-import { Box, VizContainer, Heading, ListItem } from "./Commonents";
+import { Box, VizContainer, Heading, ListItem, SecondaryText } from "./Commonents";
 import SenderWisePieChart from "./SenderWisePieChart";
 import TimeWiseBarChart from "./TimeWiseBarChart";
-import Logo from "../favicon.png";
+import Logo from "../assets/logo.png";
 defaults.font.family = `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
 "Droid Sans", "Helvetica Neue", sans-serif`;
 
 function App() {
 	const [loaded, setLoaded] = useState(false);
+
 	const [allEvents, setAllEvents] = useState([]);
+	const [extremeDates, setExtremeDates] = useState({});
 	const [senderWiseCount, setSenderWiseCount] = useState({});
 	const [timeWiseCount, setTimeWiseCount] = useState({});
 	const [wordsCount, setWordsCount] = useState([]);
 
-	const handleCount = (e) => {
+	const runCore = (text) => {
+		const { allMessages, allEvents } = parseText(text);
+		setExtremeDates({
+			firstDate: allMessages[0].date,
+			lastDate: allMessages[allMessages.length - 1].date,
+		});
+		setAllEvents(allEvents);
+
+		const count = getCountData(allMessages);
+		setSenderWiseCount(count.senderWise);
+		setTimeWiseCount(count.timeWise);
+
+		const allWords = getAllValidWords(allMessages);
+		const sortedWordCount = getSortedWordCount(allWords);
+		setWordsCount(sortedWordCount);
+
+		setLoaded(true);
+	};
+
+	const handleFileInput = (e) => {
 		const textFile = e.target?.files[0];
 		const reader = new FileReader();
 
 		reader.addEventListener("loadend", ({ target: { readyState, result } }) => {
 			console.time("process");
-
-			const { allMessages, allEvents } = parseText(result);
-			setAllEvents(allEvents);
-
-			const count = getCountData(allMessages);
-			setSenderWiseCount(count.senderWise);
-			setTimeWiseCount(count.timeWise);
-
-			const allWords = getAllValidWords(allMessages);
-			const sortedWordCount = getSortedWordCount(allWords);
-			setWordsCount(sortedWordCount);
-
+			try {
+				runCore(result);
+			} catch (error) {
+				alert("An error occured. Please make sure you're using a proper export.");
+				console.error(error);
+			}
 			console.timeEnd("process");
-			setLoaded(true);
 		});
 
 		reader.readAsText(textFile);
 	};
+	const subjectsChanges = allEvents.filter(({ type }) => type === "subjectChange");
+
+	const groupName =
+		subjectsChanges[subjectsChanges.length - 1]?.to ??
+		allEvents.find(({ type }) => type === "groupCreated")?.name ??
+		Object.keys(senderWiseCount).join(" - ");
+
 	return (
 		<>
-			<Box style={{ textAlign: "center" }}>
+			<Box style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
 				{!loaded && <img src={Logo} alt="WhatsAlysis Logo" />}
 				<Heading style={{ fontSize: "3em" }} as="h1">
 					WhatsApp Chat Analysis
 				</Heading>
-				<label htmlFor="text-data">Select your WhatsApp Export</label>
-				<input type="file" name="text-data" id="text-data" accept="text/plain" onChange={handleCount} />
+				<div style={{ display: "flex", justifyContent: "space-between" }}>
+					<input
+						type="file"
+						title="Select your WhatsApp Export"
+						placeholder="Select your WhatsApp Export"
+						name="text-data"
+						id="text-data"
+						accept="text/plain"
+						onChange={handleFileInput}
+					/>
+				</div>
+				<br />
+				<SecondaryText>
+					Select your WhatsApp Export
+					<br />
+					Not sure what to do? Check <a href="https://github.com/abhijit-hota/whatsalysis#how-to-use">
+						this
+					</a>{" "}
+					for instructions
+				</SecondaryText>
 			</Box>
+			{loaded && (
+				<Heading style={{ textAlign: "center" }}>
+					Analysis of <b>{groupName}</b> from <b>{extremeDates.firstDate}</b> to{" "}
+					<b>{extremeDates.lastDate}</b>
+				</Heading>
+			)}
 			<VizContainer>
 				{loaded && (
 					<>
@@ -74,15 +119,12 @@ function App() {
 						</Box>
 						<Box>
 							<Heading>Group Names</Heading>
-							{allEvents
-								.filter(({ type }) => type === "subjectChange")
-								.slice(-20)
-								.map(({ changer, from, to }) => (
-									<ListItem key={changer + from + to}>
-										<b>{changer}</b>
-										<span>{to}</span>
-									</ListItem>
-								))}
+							{subjectsChanges.slice(-20).map(({ changer, from, to }) => (
+								<ListItem key={changer + from + to}>
+									<b>{changer}</b>
+									<span>{to}</span>
+								</ListItem>
+							))}
 						</Box>
 					</>
 				)}

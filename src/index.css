@@ -11,6 +11,9 @@ body {
 	justify-content: space-between;
 	align-items: center;
 }
+input {
+	margin-right: 1em;
+}
 #root {
 	width: 90%;
 	padding-bottom: 2em;
