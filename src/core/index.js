@@ -9,6 +9,9 @@ export function parseText(text) {
 
 	for (let i = 1; i < arr.length; i += 3) {
 		const event = getEvent(arr[i + 2]);
+		if (event.type === "unrecognised") {
+			continue;
+		}
 		if (event.type === "message") {
 			allMessages.push({
 				date: arr[i],
