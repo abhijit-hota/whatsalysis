@@ -28,7 +28,7 @@ This tool helps you to visualise your conversation history with a specific perso
  - Save the chat export somewhere
 
 **Step 2**: Using WhatsAlytics to analyse
- - Go to [Whatsalytics](https://waal.vercel.app/)
+ - Go to [Whatsalysis](https://waal.vercel.app/)
  - Click/tap on **`Choose file`** and select the exported chat
  - Done!
 
