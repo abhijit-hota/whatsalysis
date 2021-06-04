@@ -1,5 +1,13 @@
 node_modules
+exp
 .DS_Store
 dist
 dist-ssr
 *.local
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
