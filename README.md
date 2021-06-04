@@ -1,6 +1,6 @@
 <div align="center">
 
-![WhatsAlysis](./src/favicon.png)
+![WhatsAlysis](./src/assets/logo.png)
 # WhatsAlysis
 ### Analyse and visualise your WhatsApp chats
 
