@@ -1,7 +1,7 @@
 import { defaults } from "chart.js";
 import React, { useState } from "react";
 import { parseText, getCountData, getAllValidWords, getSortedWordCount } from "../core";
-import { Box, VizContainer, AppContainer, Heading } from "./commonents/Box";
+import { Box, VizContainer, Heading, ListItem } from "./commonents";
 import SenderWisePieChart from "./SenderWisePieChart";
 import TimeWiseBarChart from "./TimeWiseBarChart";
 
@@ -40,7 +40,7 @@ function App() {
 		reader.readAsText(textFile);
 	};
 	return (
-		<AppContainer>
+		<>
 			<Box style={{ textAlign: "center" }}>
 				<Heading style={{ fontSize: "3em" }}>WhatsApp Text Analyzer</Heading>
 				<label htmlFor="text-data">Select your WhatsApp Export</label>
@@ -58,10 +58,10 @@ function App() {
 						<Box>
 							<Heading>Most Used Words</Heading>
 							{wordsCount.slice(0, 20).map(([word, count]) => (
-								<div className="count" key={word}>
-									<strong>{word}</strong>
+								<ListItem key={word}>
+									<b>{word}</b>
 									<span>{count}</span>
-								</div>
+								</ListItem>
 							))}
 						</Box>
 						<Box>
@@ -70,16 +70,16 @@ function App() {
 								.filter(({ type }) => type === "subjectChange")
 								.slice(-20)
 								.map(({ changer, from, to }) => (
-									<div className="count" key={changer + from + to}>
-										<strong>{changer}</strong>
+									<ListItem key={changer + from + to}>
+										<b>{changer}</b>
 										<span>{to}</span>
-									</div>
+									</ListItem>
 								))}
 						</Box>
 					</>
 				)}
 			</VizContainer>
-		</AppContainer>
+		</>
 	);
 }
 
