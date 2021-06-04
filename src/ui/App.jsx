@@ -1,10 +1,10 @@
 import { defaults } from "chart.js";
 import React, { useState } from "react";
 import { parseText, getCountData, getAllValidWords, getSortedWordCount } from "../core";
-import { Box, VizContainer, Heading, ListItem } from "./commonents";
+import { Box, VizContainer, Heading, ListItem } from "./Commonents";
 import SenderWisePieChart from "./SenderWisePieChart";
 import TimeWiseBarChart from "./TimeWiseBarChart";
-
+import Logo from "../favicon.png";
 defaults.font.family = `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
 "Droid Sans", "Helvetica Neue", sans-serif`;
 
@@ -42,7 +42,10 @@ function App() {
 	return (
 		<>
 			<Box style={{ textAlign: "center" }}>
-				<Heading style={{ fontSize: "3em" }}>WhatsApp Text Analyzer</Heading>
+				{!loaded && <img src={Logo} alt="WhatsAlysis Logo" />}
+				<Heading style={{ fontSize: "3em" }} as="h1">
+					WhatsApp Chat Analysis
+				</Heading>
 				<label htmlFor="text-data">Select your WhatsApp Export</label>
 				<input type="file" name="text-data" id="text-data" accept="text/plain" onChange={handleCount} />
 			</Box>
@@ -50,9 +53,14 @@ function App() {
 				{loaded && (
 					<>
 						<Box>
+							<Heading>
+								Total Messages Sent:{" "}
+								<b>{Object.values(senderWiseCount).reduce((acc, val) => acc + val)}</b>
+							</Heading>
 							<SenderWisePieChart senderStats={senderWiseCount} />
 						</Box>
 						<Box>
+							<Heading>Hourly Messaging Activity</Heading>
 							<TimeWiseBarChart timeStats={timeWiseCount} />
 						</Box>
 						<Box>

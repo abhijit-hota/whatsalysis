@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components";
 
-export const Heading = styled.h1`
-	color: #075e54;
+export const Heading = styled.h2`
+	font-weight: normal;
+	margin-top: 0;
+	color: ${({ as }) => (as === "h1" ? "#075e54" : "#128C7E")};
 `;
 
 export const Box = styled.div`

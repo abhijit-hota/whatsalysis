@@ -11,6 +11,11 @@ const TimeWiseBarChart = ({ timeStats }) => {
 			options={{
 				indexAxis: "y",
 				aspectRatio: 0.85,
+				plugins: {
+					legend: {
+						display: false,
+					},
+				},
 			}}
 			data={{
 				labels: labels.map(humanizeTime),
