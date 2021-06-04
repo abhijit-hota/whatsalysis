@@ -1,5 +1,29 @@
 {
-	"version": "0.0.0",
+	"name": "whatsalytics",
+	"displayName": "WhatsAlysis",
+	"description": "Analyse your text from your WhatsApp chat exports",
+	"keywords": [
+		"whatsapp",
+		"analysis",
+		"chat",
+		"export",
+		"javascript"
+	],
+	"homepage": "waal.vercel.app",
+	"readme": "https://github.com/abhijit-hota/#readme",
+	"author": {
+		"name": "Abhijit Hota",
+		"email": "abhihota025@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/abhijit-hota/whatsalysis"
+	},
+	"bugs": {
+		"email": "abhihota025@gmail.com",
+		"url": "https://github.com/abhijit-hota/whatsalysis/issues"
+	},
+	"version": "1.0.0",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
