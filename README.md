@@ -1,10 +1,10 @@
-<center>
+<div align="center">
 
 ![WhatsAlysis](./src/favicon.png)
 # WhatsAlysis
 ### Analyse and visualise your WhatsApp chats
 
-</center>
+</div>
 
 ----
 
