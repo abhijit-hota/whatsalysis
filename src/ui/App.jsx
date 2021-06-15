@@ -5,6 +5,7 @@ import { Box, VizContainer, Heading, ListItem, SecondaryText } from "./Commonent
 import SenderWisePieChart from "./SenderWisePieChart";
 import TimeWiseBarChart from "./TimeWiseBarChart";
 import Logo from "../assets/logo.png";
+import DateWiseChart from "./DateWiseChart";
 defaults.font.family = `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
 "Droid Sans", "Helvetica Neue", sans-serif`;
 
@@ -15,6 +16,7 @@ function App() {
 	const [extremeDates, setExtremeDates] = useState({});
 	const [senderWiseCount, setSenderWiseCount] = useState({});
 	const [timeWiseCount, setTimeWiseCount] = useState({});
+	const [dateWiseCount, setDateWiseCount] = useState({});
 	const [wordsCount, setWordsCount] = useState([]);
 
 	const runCore = (text) => {
@@ -28,11 +30,11 @@ function App() {
 		const count = getCountData(allMessages);
 		setSenderWiseCount(count.senderWise);
 		setTimeWiseCount(count.timeWise);
+		setDateWiseCount(count.dateWise);
 
 		const allWords = getAllValidWords(allMessages);
 		const sortedWordCount = getSortedWordCount(allWords);
 		setWordsCount(sortedWordCount);
-
 		setLoaded(true);
 	};
 
@@ -64,7 +66,7 @@ function App() {
 		<>
 			<Box style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
 				{!loaded && <img src={Logo} alt="WhatsAlysis Logo" />}
-				<Heading style={{ fontSize: "3em" }} as="h1">
+				<Heading style={{ fontSize: "3em", textAlign: "center" }} as="h1">
 					WhatsApp Chat Analysis
 				</Heading>
 				<div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -94,41 +96,42 @@ function App() {
 					<b>{extremeDates.lastDate}</b>
 				</Heading>
 			)}
-			<VizContainer>
-				{loaded && (
-					<>
-						<Box>
-							<Heading>
-								Total Messages Sent:{" "}
-								<b>{Object.values(senderWiseCount).reduce((acc, val) => acc + val)}</b>
-							</Heading>
-							<SenderWisePieChart senderStats={senderWiseCount} />
-						</Box>
-						<Box>
-							<Heading>Hourly Messaging Activity</Heading>
-							<TimeWiseBarChart timeStats={timeWiseCount} />
-						</Box>
-						<Box>
-							<Heading>Most Used Words</Heading>
-							{wordsCount.slice(0, 20).map(([word, count]) => (
-								<ListItem key={word}>
-									<b>{word}</b>
-									<span>{count}</span>
-								</ListItem>
-							))}
-						</Box>
-						<Box>
-							<Heading>Group Names</Heading>
-							{subjectsChanges.slice(-20).map(({ changer, from, to }) => (
-								<ListItem key={changer + from + to}>
-									<b>{changer}</b>
-									<span>{to}</span>
-								</ListItem>
-							))}
-						</Box>
-					</>
-				)}
-			</VizContainer>
+			{loaded && (
+				<VizContainer>
+					<Box>
+						<Heading>
+							Total Messages Sent: <b>{Object.values(senderWiseCount).reduce((acc, val) => acc + val)}</b>
+						</Heading>
+						<SenderWisePieChart senderStats={senderWiseCount} />
+					</Box>
+					<Box>
+						<Heading>Hourly Messaging Activity</Heading>
+						<TimeWiseBarChart timeStats={timeWiseCount} />
+					</Box>
+					<Box fullWidth>
+						<Heading>Daywise Messaging Activity</Heading>
+						<DateWiseChart dateStats={dateWiseCount} />
+					</Box>
+					<Box>
+						<Heading>Most Used Words</Heading>
+						{wordsCount.slice(0, 20).map(([word, count]) => (
+							<ListItem key={word}>
+								<b>{word}</b>
+								<span>{count}</span>
+							</ListItem>
+						))}
+					</Box>
+					<Box>
+						<Heading>Group Names</Heading>
+						{subjectsChanges.slice(-20).map(({ changer, from, to }) => (
+							<ListItem key={changer + from + to}>
+								<b>{changer}</b>
+								<span>{to}</span>
+							</ListItem>
+						))}
+					</Box>
+				</VizContainer>
+			)}
 		</>
 	);
 }

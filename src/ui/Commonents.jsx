@@ -17,6 +17,7 @@ export const Box = styled.div`
 	width: 100%;
 	margin: 1em 0;
 	padding: 1em 0;
+	${({fullWidth}) => fullWidth ? "flex-basis: auto !important;": ""}
 `;
 
 export const VizContainer = styled.div`
@@ -26,7 +27,7 @@ export const VizContainer = styled.div`
 	justify-content: space-between;
 	margin: calc(-1 * var(--gap)) 0 0 calc(-1 * var(--gap));
 	width: calc(100% + var(--gap));
-	& > div {
+	${Box} {
 		padding: 1em;
 		flex: 1 1 400px;
 		margin: var(--gap) 0 0 var(--gap);

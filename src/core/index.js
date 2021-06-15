@@ -31,13 +31,14 @@ export function parseText(text) {
 
 export function getCountData(parsedMessages) {
 	return parsedMessages.reduce(
-		(count, { sender, time }) => {
+		(count, { sender, time, date }) => {
 			const timeKey = getTimeKey(time);
 			count.senderWise[sender] = (count.senderWise[sender] || 0) + 1;
 			count.timeWise[timeKey] = (count.timeWise[timeKey] || 0) + 1;
+			count.dateWise[date] = (count.dateWise[date] || 0) + 1;
 			return count;
 		},
-		{ senderWise: {}, timeWise: {} }
+		{ senderWise: {}, timeWise: {}, dateWise: {} }
 	);
 }
 
