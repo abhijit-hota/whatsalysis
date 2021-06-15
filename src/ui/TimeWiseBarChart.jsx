@@ -1,6 +1,6 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { getColorFromString, humanizeTime } from "./utils";
+import { humanizeTime } from "./utils";
 
 const TimeWiseBarChart = ({ timeStats }) => {
 	const labels = Object.keys(timeStats);
