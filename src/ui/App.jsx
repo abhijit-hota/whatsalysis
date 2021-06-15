@@ -1,7 +1,7 @@
 import { defaults } from "chart.js";
 import React, { useState } from "react";
 import { parseText, getCountData, getAllValidWords, getSortedWordCount } from "../core";
-import { Box, VizContainer, Heading, ListItem, SecondaryText } from "./Commonents";
+import { Box, VizContainer, Heading, HStack, SecondaryText } from "./Commonents";
 import SenderWisePieChart from "./SenderWisePieChart";
 import TimeWiseBarChart from "./TimeWiseBarChart";
 import Logo from "../assets/logo.png";
@@ -115,21 +115,28 @@ function App() {
 					<Box>
 						<Heading>Most Used Words</Heading>
 						{wordsCount.slice(0, 20).map(([word, count]) => (
-							<ListItem key={word}>
+							<HStack key={word} hover>
 								<b>{word}</b>
 								<span>{count}</span>
-							</ListItem>
+							</HStack>
 						))}
 					</Box>
-					<Box>
-						<Heading>Group Names</Heading>
-						{subjectsChanges.slice(-20).map(({ changer, from, to }) => (
-							<ListItem key={changer + from + to}>
-								<b>{changer}</b>
-								<span>{to}</span>
-							</ListItem>
-						))}
-					</Box>
+					{subjectsChanges.length > 0 && (
+						<Box>
+							<HStack>
+								<Heading>Last 20 Group Names</Heading>
+								<SecondaryText>
+									Total number of changes: <b>{subjectsChanges.length}</b>
+								</SecondaryText>
+							</HStack>
+							{subjectsChanges.slice(-20).map(({ changer, from, to }) => (
+								<HStack key={changer + from + to} hover>
+									<b>{changer}</b>
+									<span>{to}</span>
+								</HStack>
+							))}
+						</Box>
+					)}
 				</VizContainer>
 			)}
 		</>

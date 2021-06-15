@@ -17,7 +17,7 @@ export const Box = styled.div`
 	width: 100%;
 	margin: 1em 0;
 	padding: 1em 0;
-	${({fullWidth}) => fullWidth ? "flex-basis: auto !important;": ""}
+	${({ fullWidth }) => (fullWidth ? "flex-basis: auto !important;" : "")}
 `;
 
 export const VizContainer = styled.div`
@@ -34,12 +34,11 @@ export const VizContainer = styled.div`
 	}
 `;
 
-export const ListItem = styled.div`
+export const HStack = styled.div`
 	display: flex;
 	justify-content: space-between;
+	align-items: baseline;
 	width: 100%;
 	padding: 0.25em;
-	&:hover {
-		background: #efefef;
-	}
+	${({ hover }) => (hover ? "&:hover { background: #efefef; }" : "")}
 `;
