@@ -109,7 +109,7 @@ function App() {
 						<TimeWiseBarChart timeStats={timeWiseCount} />
 					</Box>
 					<Box fullWidth>
-						<Heading>Daywise Messaging Activity</Heading>
+						<Heading>Daily Messaging Activity</Heading>
 						<DateWiseChart dateStats={dateWiseCount} />
 					</Box>
 					<Box>
